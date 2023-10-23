@@ -9,13 +9,27 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/vector-icons": "^13.0.0",
+    "@expo/webpack-config": "^19.0.0",
+    "@react-navigation/drawer": "^6.6.4",
+    "@react-navigation/native": "^6.1.8",
+    "@react-navigation/native-stack": "^6.9.15",
+    "@react-navigation/stack": "^6.0.0",
     "expo": "~49.0.13",
     "expo-status-bar": "~1.6.0",
+    "nanoid": "^5.0.1",
     "react": "18.2.0",
-    "react-native": "0.72.5"
+    "react-dom": "18.2.0",
+    "react-native": "0.72.5",
+    "react-native-reanimated": "~3.3.0",
+    "react-native-toast-message": "^2.1.6",
+    "react-native-web": "~0.19.6",
+    "react-native-webview": "^13.6.2",
+    "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "metro-react-native-babel-preset": "^0.77.0"
   },
   "private": true
 }
