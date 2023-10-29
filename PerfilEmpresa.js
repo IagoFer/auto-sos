@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import * as Location from 'expo-location'; 
 
 const PerfilEmpresa = () => {
   const [empresas, setEmpresas] = useState([
@@ -21,9 +22,15 @@ const PerfilEmpresa = () => {
     );
   };
 
-  const entrarNoPerfil = (empresa) => {
-    // Implemente a lógica para entrar no perfil da empresa aqui
-    console.log('Entrar no perfil da empresa:', empresa.nome);
+  const entrarNoPerfil = async (empresa) => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    console.log(location);
   };
 
   return (

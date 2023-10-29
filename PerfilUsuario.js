@@ -9,8 +9,10 @@ import {
   Button,
 } from 'react-native';
 import { useUser } from './UserContext';
+import PaginaLogin from './PaginaLogin';
+import PaginaCadastro from './PaginaCadastro';
 
-const PerfilUsuario = () => {
+const PerfilUsuario = ({ navigation }) => {
   const { userEmail } = useUser(); // Acessando o email do contexto global
   const [nomeUsuario, setNomeUsuario] = useState('');
   const [telefone, setTelefone] = useState('');
@@ -26,7 +28,7 @@ const PerfilUsuario = () => {
   useEffect(() => {
     const userData = {
       email: userEmail
-  };
+    };
     if (userEmail) {
       fetch(`http://206.189.181.153:8080/sosAuto/people?` + new URLSearchParams(userData), {
         method: 'GET',
@@ -65,9 +67,9 @@ const PerfilUsuario = () => {
     setIsLoading(true);
     const userData = {
       email: userEmail
-  };
+    };
     try {
-      const response = await fetch(`http://206.189.181.153:8080/sosAuto/people?`+ new URLSearchParams(userData), {
+      const response = await fetch(`http://206.189.181.153:8080/sosAuto/people?` + new URLSearchParams(userData), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -85,10 +87,14 @@ const PerfilUsuario = () => {
         setTelefoneEditado('');
         setSenhaEditada('');
         setConfirmarSenha('');
+        alert("Alteração bem-sucedida!");
+        setTimeout(() => {
+          navigation.navigate('PaginaLogin');
+        }, 2000);
       } else {
         setMensagem(
           response.message ||
-            'Erro durante a atualização do perfil. Por favor, tente novamente.'
+          'Erro durante a atualização do perfil. Por favor, tente novamente.'
         );
       }
     } catch (error) {

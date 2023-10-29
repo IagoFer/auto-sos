@@ -31,6 +31,7 @@ const PaginaLogin = ({ navigation, setIsLoggedIn }) => {
                 if (data.hasUser) {
                     console.log('Resposta do servidor:', data);
                     setIsLoggedIn(true);
+                    console.log('User logged in'); // Adicione este log
                     updateUserEmail(email);
                     console.log(email);
                     navigation.navigate('PaginaMenu'); // Navegação para a próxima tela após o login bem-sucedido

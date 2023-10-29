@@ -25,7 +25,9 @@
     "react-native-toast-message": "^2.1.6",
     "react-native-web": "~0.19.6",
     "react-native-webview": "^13.6.2",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.16.0",
+    "expo-location": "~16.1.0",
+    "react-native-maps": "1.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
