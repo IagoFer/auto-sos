@@ -13,22 +13,28 @@ import { useUser } from './UserContext';
 const AdicionarCarro = () => {
   const { userEmail } = useUser(); // Acessando o email do contexto global
   const [nomeUsuario, setNomeUsuario] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [endereco, setEndereco] = useState('');
+  const [marca, setMarca] = useState('');
+  const [modelo, setModelo] = useState('');
+  const [placa, setPlaca] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [nomeEditado, setNomeEditado] = useState('');
-  const [telefoneEditado, setTelefoneEditado] = useState('');
-  const [senhaEditada, setSenhaEditada] = useState('');
-  const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [marcaEditado, setMarcaEditado] = useState('');
+  const [modeloEditada, setModeloEditada] = useState('');
+  const [placaEditada, setPlacaEditada] = useState('');
   const [mensagem, setMensagem] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const userData = {
       email: userEmail
-  };
+
+    };
+    const vehicleData = {
+      email: userEmail
+    };
+
     if (userEmail) {
-      fetch(`http://206.189.181.153:8080/sosAuto/people?` + new URLSearchParams(userData), {
+      fetch(`http://206.189.181.153:8080/sosAuto/vehicle/vehiclesByPeople?` + new URLSearchParams(vehicleData), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -37,14 +43,14 @@ const AdicionarCarro = () => {
         .then((response) => response.json())
         .then((data) => {
           setIsLoading(false);
-          if (data.statusCode == 200) {
-            setNomeUsuario(data.name);
-            setTelefone(data.mobilePhoneNumber);
-            setEndereco(data.address);
-          } else {
-            console.error('Erro ao carregar perfil:', data.message);
-            setMensagem('Erro ao carregar perfil. Por favor, tente novamente.');
-          }
+          console.log(data[0]);
+          //  if (response.status == 200) {
+          setMarca(data[0].brand);
+          setModelo(data[0].model);
+          setPlaca(data[0].licensePlate);
+          //  } else {
+          //   setMensagem('Erro ao carregar perfil. Por favor, tente novamente.');
+          //  }
         })
         .catch((error) => {
           setIsLoading(false);
@@ -56,39 +62,39 @@ const AdicionarCarro = () => {
     }
   }, [userEmail]);
 
-  const editarPerfil = async () => {
-    if (confirmarSenha !== senhaEditada) {
-      alert('As senhas não coincidem. Por favor, tente novamente.');
-      return;
-    }
-
+  const editarCarro = async () => {
+  const vehiclePatchData = {
+    email : userEmail,
+    licensePlate : placa
+  }
     setIsLoading(true);
     const userData = {
       email: userEmail
-  };
+    };
     try {
-      const response = await fetch(`http://206.189.181.153:8080/sosAuto/people?`+ new URLSearchParams(userData), {
-        method: 'PUT',
+      const response = await fetch(`http://206.189.181.153:8080/sosAuto/vehicle?` + new URLSearchParams(vehiclePatchData), {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: nomeEditado,
-          mobilePhoneNumber: telefoneEditado,
-          password: senhaEditada,
+          brand: marcaEditado,
+          licensePlate: placaEditada,
+          model: modeloEditada
         }),
       });
       setIsLoading(false);
+      console.log(response);
       if (response.status == 204) {
         setModalVisible(false);
-        setNomeEditado('');
-        setTelefoneEditado('');
-        setSenhaEditada('');
-        setConfirmarSenha('');
+        setMarcaEditado('');
+        setPlacaEditada('');
+        setModeloEditada('');
+        alert("Alteração bem-sucedida! Faça o login novamente !");
       } else {
         setMensagem(
           response.message ||
-            'Erro durante a atualização do perfil. Por favor, tente novamente.'
+          'Erro durante a atualização do perfil. Por favor, tente novamente.'
         );
       }
     } catch (error) {
@@ -111,14 +117,14 @@ const AdicionarCarro = () => {
       ) : (
         <View style={styles.card}>
           <Text style={styles.nomeUsuario}>{nomeUsuario}</Text>
-          <Text style={styles.info}>{`Carro: ${userEmail}`}</Text>
-          <Text style={styles.info}>{`Marca: ${endereco}`}</Text>
-          <Text style={styles.info}>{`Ano: ${telefone}`}</Text>
+          <Text style={styles.info}>{`Carro: ${modelo}`}</Text>
+          <Text style={styles.info}>{`Marca: ${marca}`}</Text>
+          <Text style={styles.info}>{`Placa: ${placa}`}</Text>
           <TouchableOpacity
             style={styles.botao}
             onPress={() => setModalVisible(true)}
           >
-            <Text style={styles.botaoTexto}>Editar Perfil</Text>
+            <Text style={styles.botaoTexto}>Editar Carro</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -132,24 +138,25 @@ const AdicionarCarro = () => {
         <View style={styles.modalContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Carro"
-            value={nomeEditado}
-            onChangeText={(text) => setNomeEditado(text)}
+            placeholder="Modelo"
+            value={modeloEditada}
+            onChangeText={(text) => setModeloEditada(text)}
           />
           <TextInput
             style={styles.input}
             placeholder="Marca"
-            value={telefoneEditado}
-            onChangeText={(text) => setTelefoneEditado(text)}
+            value={marcaEditado}
+            onChangeText={(text) => setMarcaEditado(text)}
           />
           <TextInput
             style={styles.input}
-            placeholder="Ano"
-            value={senhaEditada}
-            onChangeText={(text) => setSenhaEditada(text)}
+            placeholder="Placa"
+            value={placaEditada}
+            onChangeText={(text) => setPlacaEditada(text)}
           />
+
           {mensagem ? <Text style={styles.mensagemErro}>{mensagem}</Text> : null}
-          <Button title="Salvar Alterações" onPress={editarPerfil} />
+          <Button title="Salvar Alterações" onPress={editarCarro} />
           <Button title="Cancelar" onPress={() => setModalVisible(false)} />
         </View>
       </Modal>

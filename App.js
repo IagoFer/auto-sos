@@ -22,8 +22,9 @@ function DrawerNavigator() {
     <Drawer.Navigator initialRouteName="Inicio">
       <Drawer.Screen name="Inicio" component={PaginaMenu} />
       <Drawer.Screen name="Seu Perfil" component={PerfilUsuario} />
-      <Drawer.Screen name="Adicionar Carro" component={AdicionarCarro} />
+      <Drawer.Screen name="Carro" component={AdicionarCarro} />
       <Drawer.Screen name="Acompanhar Rota" component={AcompanharRota} />
+      <Drawer.Screen name="Sair" component={AcompanharRota} />
       {/* Adicione outras telas de menu aqui, se necessário */}
     </Drawer.Navigator>
   );

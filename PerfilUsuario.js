@@ -20,6 +20,7 @@ const PerfilUsuario = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [nomeEditado, setNomeEditado] = useState('');
   const [telefoneEditado, setTelefoneEditado] = useState('');
+  const [enderecoEditado, setEnderecoEditado] = useState('');
   const [senhaEditada, setSenhaEditada] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
   const [mensagem, setMensagem] = useState('');
@@ -77,6 +78,7 @@ const PerfilUsuario = ({ navigation }) => {
         body: JSON.stringify({
           name: nomeEditado,
           mobilePhoneNumber: telefoneEditado,
+          address: enderecoEditado,
           password: senhaEditada,
         }),
       });
@@ -85,11 +87,12 @@ const PerfilUsuario = ({ navigation }) => {
         setModalVisible(false);
         setNomeEditado('');
         setTelefoneEditado('');
+        setEnderecoEditado('');
         setSenhaEditada('');
         setConfirmarSenha('');
-        alert("Alteração bem-sucedida!");
+        alert("Alteração bem-sucedida! Faça o login novamente !");
         setTimeout(() => {
-          navigation.navigate('PaginaLogin');
+          navigation.navigate('Seu Perfil');
         }, 2000);
       } else {
         setMensagem(
@@ -147,6 +150,12 @@ const PerfilUsuario = ({ navigation }) => {
             placeholder="Novo Número"
             value={telefoneEditado}
             onChangeText={(text) => setTelefoneEditado(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Endereço"
+            value={enderecoEditado}
+            onChangeText={(text) => setEnderecoEditado(text)}
           />
           <TextInput
             style={styles.input}
