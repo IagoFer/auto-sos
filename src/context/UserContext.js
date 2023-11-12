@@ -40,7 +40,7 @@ export const UserProvider = ({ children }) => {
 				if (data?.hasUser) {
 					setUserEmail(email)
 					setUserPassword(senha)
-					setIsCompany(data.typeEntity === 'companyEntity')
+					setIsCompany(data.typeEntity == 'companyEntity')
 				} else {
 					Alert.alert('Atenção', data?.message || 'Usuário não existe')
 				}

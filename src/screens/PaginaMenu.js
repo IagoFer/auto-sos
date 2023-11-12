@@ -37,7 +37,7 @@ const PaginaMenu = () => {
         })
         .then((data) => {
           setIsLoading(false);
-          if (data.statusCode === 200) {
+          if (data.statusCode == 200) {
             setNomeUsuario(data.name);
             setTelefone(data.contactNumber);
             setEndereco(data.address);

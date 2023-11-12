@@ -99,9 +99,6 @@ const PerfilUsuario = ({ navigation }) => {
 				setSenhaEditada('')
 				setConfirmarSenha('')
 				alert('Alteração bem-sucedida! Faça o login novamente !')
-				setTimeout(() => {
-					navigation.navigate('Seu Perfil')
-				}, 2000)
 			} else {
 				setMensagem(
 					response.message ||

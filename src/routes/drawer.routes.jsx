@@ -13,6 +13,8 @@ import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import PerfilEmpresa from '../screens/PerfilEmpresa'
 import AdicionarServico from '../screens/AdicionarServico'
+import EditarServicos from '../screens/EditarServicos'
+import PaginaMenuEmpresa from '../screens/PaginaMenuEmpresa'
 
 const Drawer = createDrawerNavigator()
 
@@ -46,7 +48,7 @@ export function DrawerNavigator({}) {
 				<Drawer.Group>
 					<Drawer.Screen
 						name='Inicio'
-						component={PaginaMenu}
+						component={PaginaMenuEmpresa}
 					/>
 					<Drawer.Screen
 						name='Seu Perfil'
@@ -55,6 +57,10 @@ export function DrawerNavigator({}) {
 					<Drawer.Screen
 						name='Adicionar Serviços'
 						component={AdicionarServico}
+					/>
+					<Drawer.Screen
+						name='Editar Serviços'
+						component={EditarServicos}
 					/>
 					<Drawer.Screen
 						name='Acompanhar Rota'

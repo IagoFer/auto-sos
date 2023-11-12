@@ -18,68 +18,72 @@ const AdicionarServico = () => {
 	const [modalVisible, setModalVisible] = useState(false)
 	const [mensagem, setMensagem] = useState('')
 
-const criarServico = () => {
+	const criarServico = () => {
 
-	const servicoData = {
-		serviceName: nomeServico,
-		distanceValue: valorDistancia,
-		baseValue: valorBase,
-		companyMail: userEmail
+		const servicoData = {
+			serviceName: nomeServico,
+			distanceValue: valorDistancia,
+			baseValue: valorBase,
+		}
+		const userData = {
+			companyMail: userEmail,
+		};
+
+		fetch('http://206.189.181.153:8080/sosAuto/sosServices/createService', +
+			new URLSearchParams(userData),
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(servicoData),
+			})
+			.then((data) => {
+
+				if (data.status == 204) {
+					alert('Cadastro de serviço bem-sucedido!')
+				}
+			})
+			.catch((error) => {
+
+				console.error('Erro durante a solicitação:', error)
+				setMensagem(
+					'Erro durante a solicitação ao servidor. Por favor, tente novamente.'
+				)
+			})
 	}
-	console.log(servicoData)
-	fetch('http://206.189.181.153:8080/sosAuto/services', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(servicoData),
-	})
-		.then((data) => {
-			console.log(data)
-			if (data.status == 204) {
-				alert('Cadastro de serviço bem-sucedido!')
-			}
-		})
-		.catch((error) => {
 
-			console.error('Erro durante a solicitação:', error)
-			setMensagem(
-				'Erro durante a solicitação ao servidor. Por favor, tente novamente.'
-			)
-		})
-}
-
-return (
-	<View style={styles.container}>
-	<TextInput
-		placeholder='Nome do serviço'
-		value={nomeServico}
-		style={styles.input}
-		placeholderTextColor='#ccc'
-		onChangeText={setNomeServico}
-	/>
-	<TextInput
-		placeholder='Valor da distancia por Km'
-		value={valorDistancia}
-		keyboardType = 'numeric'
-		style={styles.input}
-		placeholderTextColor='#ccc'
-		onChangeText={setValorDistancia}
-	/>
-	<TextInput
-		placeholder='Valor base do serviço'
-		value={valorBase}
-		keyboardType = 'numeric'
-		style={styles.input}
-		placeholderTextColor='#ccc'
-		onChangeText={setValorBase}
-	/>
-	<Button
-		title='Cadastrar serviço'
-		onPress={criarServico}
-	/>
-	</View>
-)
+	return (
+		<View style={styles.container}>
+			<TextInput
+				placeholder='Nome do serviço'
+				value={nomeServico}
+				style={styles.input}
+				placeholderTextColor='#ccc'
+				onChangeText={setNomeServico}
+			/>
+			<TextInput
+				placeholder='Valor da distância por Km'
+				value={valorDistancia}
+				keyboardType='numeric'
+				style={styles.input}
+				placeholderTextColor='#ccc'
+				onChangeText={setValorDistancia}
+			/>
+			<TextInput
+				placeholder='Valor base do serviço'
+				value={valorBase}
+				keyboardType='numeric'
+				style={styles.input}
+				placeholderTextColor='#ccc'
+				onChangeText={setValorBase}
+			/>
+			<Button
+				title='Cadastrar serviço'
+				onPress={criarServico}
+			/>
+		</View>
+	)
 }
 
 const styles = StyleSheet.create({
