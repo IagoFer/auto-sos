@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useUser } from '../context/UserContext'
 import PaginaLogin from '../screens/PaginaLogin'
-import PerfilEmpresa from '../screens/PerfilEmpresa'
+import ServicosEmpresa from '../screens/ServicosEmpresa'
 import PaginaCadastro from '../screens/PaginaCadastro'
 import PaginaCadastroEmpresa from '../screens/PaginaCadastroEmpresa'
 import { DrawerNavigator } from '../routes/drawer.routes'
@@ -24,8 +24,8 @@ export function StackRoutes() {
 					/>
 					{!!isCompany && (
 						<Stack.Screen
-							name='PerfilEmpresa'
-							component={PerfilEmpresa}
+							name='ServicosEmpresa'
+							component={ServicosEmpresa}
 							options={{ headerShown: true }}
 						/>
 					)}

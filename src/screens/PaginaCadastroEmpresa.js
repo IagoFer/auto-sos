@@ -5,13 +5,13 @@ import { Picker } from '@react-native-picker/picker'
 
 const PaginaCadastroEmpresa = ({ navigation }) => {
 	const [horariosDeTrabalho, setHorariosDeTrabalho] = useState({
-		segunda: '',
-		terca: '',
-		quarta: '',
-		quinta: '',
-		sexta: '',
-		sabado: '',
-		domingo: '',
+		MONDAY: '',
+		TUESDAY: '',
+		WEDNESDAY: '',
+		THURSDAY: '',
+		FRIDAY: '',
+		SATURDAY: '',
+		SUNDAY: '',
 	})
 
 	const [nome, setNome] = useState('')
@@ -31,13 +31,13 @@ const PaginaCadastroEmpresa = ({ navigation }) => {
 		}
 
 		const workHour = {
-			SATURDAY: diasDeTrabalho === 'sabado' ? horarioDeTrabalho : '',
-			SUNDAY: diasDeTrabalho === 'domingo' ? horarioDeTrabalho : '',
-			MONDAY: diasDeTrabalho === 'segunda' ? horarioDeTrabalho : '',
-			TUESDAY: diasDeTrabalho === 'terca' ? horarioDeTrabalho : '',
-			WEDNESDAY: diasDeTrabalho === 'quarta' ? horarioDeTrabalho : '',
-			THURSDAY: diasDeTrabalho === 'quinta' ? horarioDeTrabalho : '',
-			FRIDAY: diasDeTrabalho === 'sexta' ? horarioDeTrabalho : '',
+			SATURDAY: diasDeTrabalho == 'sabado' ? horariosDeTrabalho : '',
+			SUNDAY: diasDeTrabalho == 'domingo' ? horariosDeTrabalho : '',
+			MONDAY: diasDeTrabalho == 'segunda' ? horariosDeTrabalho : '',
+			TUESDAY: diasDeTrabalho == 'terca' ? horariosDeTrabalho : '',
+			WEDNESDAY: diasDeTrabalho == 'quarta' ? horariosDeTrabalho : '',
+			THURSDAY: diasDeTrabalho == 'quinta' ? horariosDeTrabalho : '',
+			FRIDAY: diasDeTrabalho == 'sexta' ? horariosDeTrabalho : '',
 		}
 
 		const userData = {
@@ -49,7 +49,7 @@ const PaginaCadastroEmpresa = ({ navigation }) => {
 			password: senha,
 			contactNumber: numero,
 		}
-
+		console.log(userData)
 		fetch('http://206.189.181.153:8080/sosAuto/companies', {
 			method: 'POST',
 			headers: {
@@ -58,7 +58,6 @@ const PaginaCadastroEmpresa = ({ navigation }) => {
 			body: JSON.stringify(userData),
 		})
 			.then((data) => {
-				console.log('Resposta do servidor:', data)
 				if (data.status == 204) {
 					alert('Cadastro bem-sucedido!')
 					setTimeout(() => {
@@ -138,32 +137,36 @@ const PaginaCadastroEmpresa = ({ navigation }) => {
 				onValueChange={(itemValue) => setDiasDeTrabalho(itemValue)}
 				style={styles.picker}>
 				<Picker.Item
+					label='Selecione dia / digite horario'
+					value=''
+				/>
+				<Picker.Item
 					label='Segunda-feira'
-					value='segunda'
+					value='MONDAY'
 				/>
 				<Picker.Item
 					label='Terça-feira'
-					value='terca'
+					value='TUESDAY'
 				/>
 				<Picker.Item
 					label='Quarta-feira'
-					value='quarta'
+					value='WEDNESDAY'
 				/>
 				<Picker.Item
 					label='Quinta-feira'
-					value='quinta'
+					value='THURSDAY'
 				/>
 				<Picker.Item
 					label='Sexta-feira'
-					value='sexta'
+					value='FRIDAY'
 				/>
 				<Picker.Item
 					label='Sábado'
-					value='sabado'
+					value='SATURDAY'
 				/>
 				<Picker.Item
 					label='Domingo'
-					value='domingo'
+					value='SUNDAY'
 				/>
 			</Picker>
 			<TextInput

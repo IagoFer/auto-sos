@@ -3,6 +3,7 @@ import { Alert } from 'react-native'
 
 const UserContext = createContext({
 	userEmail: '',
+	userPassword: '',
 	isCompany: false,
 	login: async (email, senha) => {},
 	logout: () => {},
@@ -10,6 +11,7 @@ const UserContext = createContext({
 
 export const UserProvider = ({ children }) => {
 	const [userEmail, setUserEmail] = useState('')
+	const [userPassword, setUserPassword] = useState('')
 	const [isCompany, setIsCompany] = useState(false)
 
 	async function login(email, senha) {
@@ -36,10 +38,9 @@ export const UserProvider = ({ children }) => {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data?.hasUser) {
-					console.log('Resposta do servidor:', data)
 					setUserEmail(email)
+					setUserPassword(senha)
 					setIsCompany(data.typeEntity === 'companyEntity')
-					console.log('User logged in') // Adicione este log
 				} else {
 					Alert.alert('Atenção', data?.message || 'Usuário não existe')
 				}
@@ -55,7 +56,7 @@ export const UserProvider = ({ children }) => {
 	}
 
 	return (
-		<UserContext.Provider value={{ login, isCompany, userEmail, logout }}>
+		<UserContext.Provider value={{ login, isCompany, userEmail, userPassword, logout }}>
 			{children}
 		</UserContext.Provider>
 	)

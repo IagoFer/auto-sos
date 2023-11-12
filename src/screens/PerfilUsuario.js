@@ -13,7 +13,7 @@ import PaginaLogin from './PaginaLogin'
 import PaginaCadastro from './PaginaCadastro'
 
 const PerfilUsuario = ({ navigation }) => {
-	const { userEmail } = useUser() // Acessando o email do contexto global
+	const { userEmail } = useUser() // Acessando o email do context
 	const [nomeUsuario, setNomeUsuario] = useState('')
 	const [telefone, setTelefone] = useState('')
 	const [endereco, setEndereco] = useState('')

@@ -11,8 +11,7 @@ import {
 import { useUser } from '../context/UserContext'
 
 const AdicionarCarro = () => {
-	const { userEmail } = useUser() // Acessando o email do contexto global
-	const [nomeUsuario, setNomeUsuario] = useState('')
+	const { userEmail } = useUser() // Acessando o email do contex
 	const [marca, setMarca] = useState('')
 	const [modelo, setModelo] = useState('')
 	const [placa, setPlaca] = useState('')
@@ -121,8 +120,7 @@ const AdicionarCarro = () => {
 				</View>
 			) : (
 				<View style={styles.card}>
-					<Text style={styles.nomeUsuario}>{nomeUsuario}</Text>
-					<Text style={styles.info}>{`Carro: ${modelo}`}</Text>
+					<Text style={styles.nomeUsuario}>{`Carro: ${modelo}`}</Text>
 					<Text style={styles.info}>{`Marca: ${marca}`}</Text>
 					<Text style={styles.info}>{`Placa: ${placa}`}</Text>
 					<TouchableOpacity

@@ -10,7 +10,9 @@ import PaginaMenu from '../screens/PaginaMenu'
 import { AcompanharRota } from '../screens/AcompanharRota'
 import { View } from 'react-native'
 import { TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome' // Importe o ícone FontAwesome
+import Icon from 'react-native-vector-icons/FontAwesome'
+import PerfilEmpresa from '../screens/PerfilEmpresa'
+import AdicionarServico from '../screens/AdicionarServico'
 
 const Drawer = createDrawerNavigator()
 
@@ -48,11 +50,11 @@ export function DrawerNavigator({}) {
 					/>
 					<Drawer.Screen
 						name='Seu Perfil'
-						component={PerfilUsuario}
+						component={PerfilEmpresa}
 					/>
 					<Drawer.Screen
-						name='Carro'
-						component={AdicionarCarro}
+						name='Adicionar Serviços'
+						component={AdicionarServico}
 					/>
 					<Drawer.Screen
 						name='Acompanhar Rota'

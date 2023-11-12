@@ -30,7 +30,6 @@ const PaginaCadastro = ({ navigation }) => {
 			body: JSON.stringify(userData),
 		})
 			.then((data) => {
-				console.log('Resposta do servidor:', data)
 				if (data.status == 204) {
 					alert('Cadastro bem-sucedido!')
 					setTimeout(() => {

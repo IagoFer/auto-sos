@@ -10,7 +10,7 @@ const PaginaMenuEmpresa = () => {
 	return (
 		<View style={styles.container}>
 			{/* ... Seu conteúdo aqui */}
-			<TouchableOpacity onPress={() => navigation.navigate('PerfilEmpresa')}>
+			<TouchableOpacity onPress={() => navigation.navigate('ServicosEmpresa')}>
 				<View style={styles.card}>
 					<Text style={styles.companyName}>Mecânica XYZ</Text>
 					<Text style={styles.infoText}>Localização: Rua Godofredo, 123</Text>

@@ -8,14 +8,14 @@ import {
 	ActivityIndicator,
 } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-import { useUser } from '../context/UserContext' // Importe useUser
+import { useUser } from '../context/UserContext'
 
 const PaginaLogin = ({ navigation }) => {
 	const [email, setEmail] = useState('')
 	const [senha, setSenha] = useState('')
 	const [isLoading, setLoading] = useState(false)
 
-	const { login } = useUser() // Obtenha updateUserEmail do contexto
+	const { login } = useUser() // Obtenha updateUserEmail do context
 
 	async function handleLogin() {
 		if (isLoading) return
