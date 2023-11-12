@@ -1,8 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { DrawerContentScrollView } from '@react-navigation/drawer'
-import { Ionicons } from '@expo/vector-icons'
 
 const PaginaMenuEmpresa = () => {
 	const navigation = useNavigation()

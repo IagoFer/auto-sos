@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,52 +8,54 @@ import {
   TextInput,
   Button,
   ScrollView,
-} from 'react-native';
-import { useUser } from '../context/UserContext';
+} from "react-native";
+import { useUser } from "../context/UserContext";
 
 const EditarServicos = ({ navigation }) => {
   const { userEmail } = useUser();
   const [servicos, setServicos] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
-  const [nomeServicoEditado, setNomeServicoEditado] = useState('');
-  const [valorDistanciaEditado, setValorDistanciaEditado] = useState('');
-  const [valorBaseEditado, setValorBaseEditado] = useState('');
+  const [nomeServicoAntigo, setNomeServicoAntigo] = useState("");
+  const [nomeServicoEditado, setNomeServicoEditado] = useState("");
+  const [valorDistanciaEditado, setValorDistanciaEditado] = useState("");
+  const [valorBaseEditado, setValorBaseEditado] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [mensagem, setMensagem] = useState('');
+  const [mensagem, setMensagem] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const userData = {
       companyMail: userEmail,
     };
+
     if (userEmail) {
       fetch(
         `http://206.189.181.153:8080/sosAuto/sosServices/servicesByCompanyMail?` +
           new URLSearchParams(userData),
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       )
         .then((response) => response.json())
         .then((data) => {
           setIsLoading(false);
-          if (data.statusCode == '200') {
+          if (data.statusCode == "200") {
             setServicos(data.serviceResponseBodyList || []);
           } else {
-            console.error('Erro ao carregar serviço:', data.message);
+            console.error("Erro ao carregar serviço:", data.message);
             setMensagem(
-              'Erro ao carregar serviço. Por favor, tente novamente.'
+              "Erro ao carregar serviço. Por favor, tente novamente."
             );
           }
         })
         .catch((error) => {
           setIsLoading(false);
-          console.error('Erro durante a solicitação:', error);
+          console.error("Erro durante a solicitação:", error);
           setMensagem(
-            'Erro durante a solicitação ao servidor. Por favor, tente novamente.'
+            "Erro durante a solicitação ao servidor. Por favor, tente novamente."
           );
         });
     }
@@ -61,18 +63,20 @@ const EditarServicos = ({ navigation }) => {
 
   const editarServico = async () => {
     setIsLoading(true);
-    const userData = {
+
+    const userEdit = {
       companyMail: userEmail,
-	  serviceName : nomeServicoEditado
+      serviceName: nomeServicoAntigo,
     };
+
     try {
       const response = await fetch(
         `http://206.189.181.153:8080/sosAuto/sosServices/editService?` +
-          new URLSearchParams(userData),
+          new URLSearchParams(userEdit),
         {
-          method: 'PUT',
+          method: "PUT",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             serviceName: nomeServicoEditado,
@@ -81,24 +85,25 @@ const EditarServicos = ({ navigation }) => {
           }),
         }
       );
+
       setIsLoading(false);
-	  console.log(response);
+
       if (response.status == 204) {
         setModalVisible(false);
-        setNomeServicoEditado('');
-        setValorDistanciaEditado('');
-        setValorBaseEditado('');
-        alert('Alteração bem-sucedida! Faça o login novamente !');
+        setNomeServicoEditado("");
+        setValorDistanciaEditado("");
+        setValorBaseEditado("");
+        alert("Alteração bem-sucedida! Faça o login novamente !");
       } else {
         setMensagem(
           response.message ||
-            'Erro durante a atualização do serviço. Por favor, tente novamente.'
+            "Erro durante a atualização do serviço. Por favor, tente novamente."
         );
       }
     } catch (error) {
       setIsLoading(false);
-      console.error('Erro durante a solicitação:', error);
-      setMensagem('Erro durante a solicitação ao servidor');
+      console.error("Erro durante a solicitação:", error);
+      setMensagem("Erro durante a solicitação ao servidor");
     }
   };
 
@@ -123,9 +128,11 @@ const EditarServicos = ({ navigation }) => {
                   setModalVisible(true);
                   setSelectedService(servico);
                   setNomeServicoEditado(servico.serviceName);
+                  setNomeServicoAntigo(servico.serviceName);
                   setValorDistanciaEditado(servico.distanceValue.toString());
                   setValorBaseEditado(servico.baseValue.toString());
-                }}>
+                }}
+              >
                 <Text style={styles.botaoTexto}>Editar serviço</Text>
               </TouchableOpacity>
             </View>
@@ -134,34 +141,35 @@ const EditarServicos = ({ navigation }) => {
       )}
 
       <Modal
-        animationType='slide'
+        animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}>
+        onRequestClose={() => setModalVisible(false)}
+      >
         <View style={styles.modalContainer}>
           <TextInput
             style={styles.input}
-            placeholder='Novo nome do serviço'
+            placeholder="Novo nome do serviço"
             value={nomeServicoEditado}
             onChangeText={(text) => setNomeServicoEditado(text)}
           />
           <TextInput
             style={styles.input}
-            placeholder='Novo valor da distância por Km'
+            placeholder="Novo valor da distância por Km"
             value={valorDistanciaEditado}
             onChangeText={(text) => setValorDistanciaEditado(text)}
           />
           <TextInput
             style={styles.input}
-            placeholder='Novo valor base do serviço'
+            placeholder="Novo valor base do serviço"
             value={valorBaseEditado}
             onChangeText={(text) => setValorBaseEditado(text)}
           />
           {mensagem ? (
             <Text style={styles.mensagemErro}>{mensagem}</Text>
           ) : null}
-          <Button title='Salvar Alterações' onPress={editarServico} />
-          <Button title='Cancelar' onPress={() => setModalVisible(false)} />
+          <Button title="Salvar Alterações" onPress={editarServico} />
+          <Button title="Cancelar" onPress={() => setModalVisible(false)} />
         </View>
       </Modal>
     </ScrollView>
@@ -171,17 +179,17 @@ const EditarServicos = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
     paddingTop: 24,
     paddingHorizontal: 16,
   },
   cardContainer: {
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    justifyContent: 'flex-start',
+    flexDirection: "column",
+    alignItems: "stretch",
+    justifyContent: "flex-start",
   },
   card: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 8,
     elevation: 4,
     padding: 16,
@@ -189,40 +197,40 @@ const styles = StyleSheet.create({
   },
   nomeServico: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 8,
   },
   botao: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: "#4CAF50",
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 4,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
   },
   botaoTexto: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   input: {
-    width: '80%',
+    width: "80%",
     height: 50,
     fontSize: 18,
     marginVertical: 10,
     padding: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   mensagemErro: {
-    color: 'red',
+    color: "red",
     marginTop: 10,
   },
 });
