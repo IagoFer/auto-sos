@@ -29,21 +29,21 @@ const ServicosEmpresa = () => {
 		return (
 			<TouchableOpacity
 				style={styles.card}
-				onPress={() => entrarNoPerfil(item)}>
+				onPress={() => ContratarServico(item)}>
 				<Text style={styles.nomeEmpresa}>{item.nome}</Text>
 				<Text style={styles.info}>{`Preço: ${item.localizacao}`}</Text>
 				<Text
 					style={styles.info}>{`Horário de Trabalho: ${item.horario}`}</Text>
 				<TouchableOpacity
 					style={styles.botao}
-					onPress={() => entrarNoPerfil(item)}>
+					onPress={() => ContratarServico(item)}>
 					<Text style={styles.botaoTexto}>Contratar serviço</Text>
 				</TouchableOpacity>
 			</TouchableOpacity>
 		)
 	}
 
-	const entrarNoPerfil = async (empresa) => {
+	const ContratarServico = async (empresa) => {
 		let { status } = await Location.requestForegroundPermissionsAsync()
 		if (status !== 'granted') {
 			setErrorMsg('Permission to access location was denied')

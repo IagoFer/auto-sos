@@ -31,7 +31,8 @@
     "react-native-toast-message": "^2.1.6",
     "react-native-web": "~0.19.6",
     "react-native-webview": "^13.6.2",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.16.0",
+    "swr": "^2.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
