@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
 const PaginaCadastro = ({ navigation }) => {
@@ -53,7 +53,7 @@ const PaginaCadastro = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <FontAwesome name="cog" size={50} color="orange" style={styles.icon} />
       <Text style={styles.title}>Cadastro</Text>
       <TextInput
@@ -92,26 +92,25 @@ const PaginaCadastro = ({ navigation }) => {
         color="green"
       />
       {mensagem ? <Text style={styles.mensagem}>{mensagem}</Text> : null}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     width: "100%",
     height: "100%",
     backgroundColor: "black",
   },
   title: {
+    paddingLeft: 140,
     fontSize: 24,
     color: "white",
     marginBottom: 20,
   },
   input: {
-    width: "80%",
+    width: "100%",
     height: 50,
     fontSize: 18,
     marginVertical: 10,
@@ -122,6 +121,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   icon: {
+    marginTop:15,
+		paddingLeft: 170,
     marginBottom: 20,
   },
   mensagem: {
