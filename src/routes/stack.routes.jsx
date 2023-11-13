@@ -5,6 +5,7 @@ import ServicosEmpresa from '../screens/ServicosEmpresa'
 import PaginaCadastro from '../screens/PaginaCadastro'
 import PaginaCadastroEmpresa from '../screens/PaginaCadastroEmpresa'
 import { DrawerNavigator } from '../routes/drawer.routes'
+import ServicosPorEmpresa from '../screens/ServicosPorEmpresa'
 
 const Stack = createNativeStackNavigator()
 
@@ -20,6 +21,13 @@ export function StackRoutes() {
 						component={DrawerNavigator}
 						options={{
 							headerShown: false,
+						}}
+					/>
+						<Stack.Screen
+						name='Serviços da Empresa'
+						component={ServicosPorEmpresa}
+						options={{
+							headerShown: true,
 						}}
 					/>
 					{!!isCompany && (

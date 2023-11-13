@@ -8,13 +8,9 @@ const PaginaMenuEmpresa = () => {
 	return (
 		<View style={styles.container}>
 			{/* ... Seu conteúdo aqui */}
-			<TouchableOpacity onPress={() => navigation.navigate('ServicosEmpresa')}>
+			<TouchableOpacity >
 				<View style={styles.card}>
-					<Text style={styles.companyName}>Mecânica XYZ</Text>
-					<Text style={styles.infoText}>Localização: Rua Godofredo, 123</Text>
-					<Text style={styles.infoText}>
-						Horário de Funcionamento: 08:00 - 18:00
-					</Text>
+
 				</View>
 			</TouchableOpacity>
 		</View>

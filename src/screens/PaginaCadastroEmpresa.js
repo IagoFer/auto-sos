@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { Picker } from '@react-native-picker/picker'
 
@@ -80,7 +80,7 @@ const PaginaCadastroEmpresa = ({ navigation }) => {
 	}
 
 	return (
-		<View style={styles.container}>
+		<ScrollView style={styles.container}>
 			<FontAwesome
 				name='cog'
 				size={50}
@@ -191,15 +191,13 @@ const PaginaCadastroEmpresa = ({ navigation }) => {
 				color='green'
 			/>
 			{mensagem ? <Text style={styles.mensagem}>{mensagem}</Text> : null}
-		</View>
+		</ScrollView>
 	)
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
 		width: '100%',
 		height: '100%',
 		backgroundColor: 'black',
@@ -215,12 +213,13 @@ const styles = StyleSheet.create({
 		padding: 10,
 	},
 	title: {
+		paddingLeft: 80,
 		fontSize: 24,
 		color: 'white',
 		marginBottom: 20,
 	},
 	input: {
-		width: '80%',
+		width: '100%',
 		height: 50,
 		fontSize: 18,
 		marginVertical: 10,
@@ -231,6 +230,8 @@ const styles = StyleSheet.create({
 		color: 'white',
 	},
 	icon: {
+		marginTop:15,
+		paddingLeft: 170,
 		marginBottom: 20,
 	},
 	mensagem: {

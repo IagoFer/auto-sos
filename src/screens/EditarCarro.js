@@ -46,9 +46,9 @@ const EditarCarro = ({ navigation }) => {
           if (data.statusCode == "200") {
             setVeiculos(data.vehicleResponseBodyList || []);
           } else {
-            console.error("Erro ao carregar serviço:", data.message);
+            console.error("Erro ao carregar veículos:", data.message);
             setMensagem(
-              "Erro ao carregar serviço. Por favor, tente novamente."
+              "Erro ao carregar veículos. Por favor, tente novamente."
             );
           }
         })
