@@ -15,6 +15,7 @@ import PerfilEmpresa from '../screens/PerfilEmpresa'
 import AdicionarServico from '../screens/AdicionarServico'
 import EditarServicos from '../screens/EditarServicos'
 import PaginaMenuEmpresa from '../screens/PaginaMenuEmpresa'
+import EditarCarro from '../screens/EditarCarro'
 
 const Drawer = createDrawerNavigator()
 
@@ -78,8 +79,12 @@ export function DrawerNavigator({}) {
 						component={PerfilUsuario}
 					/>
 					<Drawer.Screen
-						name='Carro'
+						name='Adicionar Veículos'
 						component={AdicionarCarro}
+					/>
+					<Drawer.Screen
+						name='Editar Veículos'
+						component={EditarCarro}
 					/>
 					<Drawer.Screen
 						name='Acompanhar Rota'

@@ -15,163 +15,80 @@ const AdicionarCarro = () => {
 	const [marca, setMarca] = useState('')
 	const [modelo, setModelo] = useState('')
 	const [placa, setPlaca] = useState('')
+	const [ano, setAno] = useState('')
 	const [modalVisible, setModalVisible] = useState(false)
-	const [nomeEditado, setNomeEditado] = useState('')
-	const [marcaEditado, setMarcaEditado] = useState('')
-	const [modeloEditada, setModeloEditada] = useState('')
-	const [placaEditada, setPlacaEditada] = useState('')
 	const [mensagem, setMensagem] = useState('')
 	const [isLoading, setIsLoading] = useState(true)
 
-	useEffect(() => {
+	const criarVeiculo = () => {
+		const veiculoData = {
+		  brand: marca,
+		  licensePlate: placa,
+		  model: modelo,
+		  year: ano
+		};
 		const userData = {
-			email: userEmail,
-		}
-		const vehicleData = {
-			email: userEmail,
-		}
-
-		if (userEmail) {
-			fetch(
-				`http://206.189.181.153:8080/sosAuto/vehicle/vehiclesByPeople?` +
-					new URLSearchParams(vehicleData),
-				{
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				}
-			)
-				.then((response) => response.json())
-				.then((data) => {
-					setIsLoading(false)
-					console.log(data[0])
-					//  if (response.status == 200) {
-					setMarca(data[0].brand)
-					setModelo(data[0].model)
-					setPlaca(data[0].licensePlate)
-					//  } else {
-					//   setMensagem('Erro ao carregar perfil. Por favor, tente novamente.');
-					//  }
-				})
-				.catch((error) => {
-					setIsLoading(false)
-					console.error('Erro durante a solicitação:', error)
-					setMensagem(
-						'Erro durante a solicitação ao servidor. Por favor, tente novamente.'
-					)
-				})
-		}
-	}, [userEmail])
-
-	const editarCarro = async () => {
-		const vehiclePatchData = {
-			email: userEmail,
-			licensePlate: placa,
-		}
-		setIsLoading(true)
-		const userData = {
-			email: userEmail,
-		}
-		try {
-			const response = await fetch(
-				`http://206.189.181.153:8080/sosAuto/vehicle?` +
-					new URLSearchParams(vehiclePatchData),
-				{
-					method: 'PATCH',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						brand: marcaEditado,
-						licensePlate: placaEditada,
-						model: modeloEditada,
-					}),
-				}
-			)
-			setIsLoading(false)
-			console.log(response)
-			if (response.status == 204) {
-				setModalVisible(false)
-				setMarcaEditado('')
-				setPlacaEditada('')
-				setModeloEditada('')
-				alert('Alteração bem-sucedida! Faça o login novamente !')
-			} else {
-				setMensagem(
-					response.message ||
-						'Erro durante a atualização do perfil. Por favor, tente novamente.'
-				)
+		  email: userEmail,
+		};
+	
+		fetch(
+		  "http://206.189.181.153:8080/sosAuto/vehicle?" + 
+		  new URLSearchParams(userData),
+		  {
+			method: "POST",
+			headers: {
+			  "Content-Type": "application/json",
+			},
+			body: JSON.stringify(veiculoData),
+		  }
+		)
+		  .then((data) => {
+			if (data.status == 204) {
+			  alert("Cadastro de veículo bem-sucedido!");
 			}
-		} catch (error) {
-			setIsLoading(false)
-			console.error('Erro durante a solicitação:', error)
-			setMensagem('Erro durante a solicitação ao servidor')
-		}
-	}
+		  })
+		  .catch((error) => {
+			console.error("Erro durante a solicitação:", error);
+			setMensagem(
+			  "Erro durante a solicitação ao servidor. Por favor, tente novamente."
+			);
+		  });
+	  };
 
-	return (
+	  return (
 		<View style={styles.container}>
-			{isLoading ? (
-				<Text>Carregando...</Text>
-			) : mensagem ? (
-				<View style={styles.container}>
-					<Text style={styles.mensagemErro}>{mensagem}</Text>
-				</View>
-			) : (
-				<View style={styles.card}>
-					<Text style={styles.nomeUsuario}>{`Carro: ${modelo}`}</Text>
-					<Text style={styles.info}>{`Marca: ${marca}`}</Text>
-					<Text style={styles.info}>{`Placa: ${placa}`}</Text>
-					<TouchableOpacity
-						style={styles.botao}
-						onPress={() => setModalVisible(true)}>
-						<Text style={styles.botaoTexto}>Editar Carro</Text>
-					</TouchableOpacity>
-				</View>
-			)}
-
-			<Modal
-				animationType='slide'
-				transparent={true}
-				visible={modalVisible}
-				onRequestClose={() => setModalVisible(false)}>
-				<View style={styles.modalContainer}>
-					<TextInput
-						style={styles.input}
-						placeholder='Modelo'
-						value={modeloEditada}
-						onChangeText={(text) => setModeloEditada(text)}
-					/>
-					<TextInput
-						style={styles.input}
-						placeholder='Marca'
-						value={marcaEditado}
-						onChangeText={(text) => setMarcaEditado(text)}
-					/>
-					<TextInput
-						style={styles.input}
-						placeholder='Placa'
-						value={placaEditada}
-						onChangeText={(text) => setPlacaEditada(text)}
-					/>
-
-					{mensagem ? (
-						<Text style={styles.mensagemErro}>{mensagem}</Text>
-					) : null}
-					<Button
-						title='Salvar Alterações'
-						onPress={editarCarro}
-					/>
-					<Button
-						title='Cancelar'
-						onPress={() => setModalVisible(false)}
-					/>
-				</View>
-			</Modal>
+		  <TextInput
+			placeholder="Nome da marca"
+			value={marca}
+			style={styles.input}
+			placeholderTextColor="#ccc"
+			onChangeText={setMarca}
+		  />
+		  <TextInput
+			placeholder="Nome do modelo"
+			value={modelo}
+			style={styles.input}
+			placeholderTextColor="#ccc"
+			onChangeText={setModelo}
+		  />
+		  <TextInput
+			placeholder="Ano do veículo"
+			value={ano}
+			style={styles.input}
+			placeholderTextColor="#ccc"
+			onChangeText={setAno}
+		  />
+		  	<TextInput
+			placeholder="Placa do veículo"
+			value={placa}
+			style={styles.input}
+			placeholderTextColor="#ccc"
+			onChangeText={setPlaca}
+		  />
+		  <Button title="Cadastrar veículo" onPress={criarVeiculo} />
 		</View>
-	)
-}
+	  );
+	};
 
 const styles = StyleSheet.create({
 	container: {

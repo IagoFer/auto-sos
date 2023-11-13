@@ -28,9 +28,6 @@ const AdicionarServico = () => {
       companyMail: userEmail,
     };
 
-    console.log(userData);
-    console.log(userEmail);
-    console.log(servicoData);
     fetch(
       "http://206.189.181.153:8080/sosAuto/sosServices/createService?" + 
       new URLSearchParams(userData),
