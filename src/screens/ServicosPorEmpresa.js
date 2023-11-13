@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useUser } from "../context/UserContext";
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 
 const ServicosPorEmpresa = ({ navigation, route }) => {
   const { userEmail } = useUser();
@@ -23,18 +23,18 @@ const ServicosPorEmpresa = ({ navigation, route }) => {
 
   useEffect(() => {
     const userData = {
-        companyMail: companyMail,
-      };
+      companyMail: companyMail,
+    };
 
     fetch(
-      `http://206.189.181.153:8080/sosAuto/sosServices/servicesByCompanyMail?`, +
-      new URLSearchParams(userData),
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
+      `http://206.189.181.153:8080/sosAuto/sosServices/servicesByCompanyMail?` +
+        new URLSearchParams(userData),
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     )
       .then((response) => {
         if (!response.ok) {
@@ -44,21 +44,17 @@ const ServicosPorEmpresa = ({ navigation, route }) => {
       })
       .then((data) => {
         setIsLoading(false);
-        console.log(data)
         if (data.statusCode == "200") {
           setServicos(data.companyResponse || []);
         } else {
           console.error("Erro ao carregar empresas:", data.message);
-          setMensagem(
-            "Erro ao carregar empresas. Por favor, tente novamente."
-          );
+          setMensagem("Erro ao carregar empresas. Por favor, tente novamente.");
         }
       })
       .catch((error) => {
         setIsLoading(false);
-        console.error('Erro durante a solicitação:', error);
+        console.error("Erro durante a solicitação:", error);
       });
-
   }, [userEmail]);
 
   const contratarServico = async () => {
@@ -67,10 +63,12 @@ const ServicosPorEmpresa = ({ navigation, route }) => {
       // Substitua este comentário pela lógica específica de contratação
 
       setModalVisible(false);
-      alert('Serviço contratado com sucesso!');
+      alert("Serviço contratado com sucesso!");
     } catch (error) {
-      console.error('Erro durante a contratação do serviço:', error);
-      setMensagem('Erro durante a contratação do serviço. Por favor, tente novamente.');
+      console.error("Erro durante a contratação do serviço:", error);
+      setMensagem(
+        "Erro durante a contratação do serviço. Por favor, tente novamente."
+      );
     }
   };
 

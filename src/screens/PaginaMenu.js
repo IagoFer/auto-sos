@@ -19,7 +19,7 @@ const PaginaMenu = () => {
 
   useEffect(() => {
     fetch(
-      `http://206.189.181.153:8080/sosAuto/companies/allCompanies?`, {
+      `http://206.189.181.153:8080/sosAuto/companies/allCompanies`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
