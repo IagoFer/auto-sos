@@ -45,7 +45,7 @@ const ServicosPorEmpresa = ({ navigation, route }) => {
       .then((data) => {
         setIsLoading(false);
         if (data.statusCode == "200") {
-          setServicos(data.companyResponse || []);
+          setServicos(data.serviceResponseBodyList || []);
         } else {
           console.error("Erro ao carregar empresas:", data.message);
           setMensagem("Erro ao carregar empresas. Por favor, tente novamente.");
@@ -84,9 +84,9 @@ const ServicosPorEmpresa = ({ navigation, route }) => {
         <View style={styles.cardContainer}>
           {servicos.map((servico, index) => (
             <View key={index} style={styles.card}>
-              <Text style={styles.nomeServico}>{servico.name}</Text>
-              <Text>{`Descrição: ${servico.description}`}</Text>
-              <Text>{`Preço: ${servico.price}`}</Text>
+              <Text style={styles.nomeServico}>{servico.serviceName}</Text>
+              <Text>{`Valor base: R$ ${servico.baseValue}`}</Text>
+              <Text>{`Valor por distância: R$ ${servico.distanceValue}`}</Text>
               <TouchableOpacity
                 style={styles.botao}
                 onPress={() => {
